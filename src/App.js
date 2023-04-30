@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react'
+import './App.css'
+import Header from './components/Header'
+import Form from './components/Form'
+import List from './components/List'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      properties: localStorage.getItem('properties') ? JSON.parse(localStorage.getItem('properties')) : []
+    }
+  }
+
+
+
+
+
+  addListing = (name, id) => {
+    this.setState({
+      properties: [...this.state.properties, {name, id}]
+
+    })
+    
+  }
+
+
+  render() {
+    console.log(this.state.properties)
+    localStorage.setItem('properties', JSON.stringify(this.state.properties))
+
+    
+    return (
+      <div> 
+          <Header />  
+          <Form 
+            addListing={this.addListing}
+
+
+          
+          />
+          <List 
+            properties={this.state.properties}
+          
+          />
+      </div>
+      
+
+
+    )
+  }
 }
 
-export default App;
+
+export default App
